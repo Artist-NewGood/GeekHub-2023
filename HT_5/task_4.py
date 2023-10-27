@@ -9,11 +9,13 @@
 
 
 from collections import Counter
+import re
 
 
 def check_string(string):
     letters = (letter for letter in string if letter.isalpha())
     digits = (digit for digit in string if digit.isdigit())
+    digits_group_version = re.findall(r'\d+', string)
 
     if 30 <= len(string) <= 50:
         print(f'Length of string - {len(string)}\n'
@@ -22,7 +24,9 @@ def check_string(string):
 
     elif len(string) < 30:
         total_digit_sum = sum(map(int, digits))
+        total_digit_sum_group_version = sum(map(int, digits_group_version))
         print(f'The sum of all numbers - {total_digit_sum}\n'
+              f'The sum of all numbers (group version) - {total_digit_sum_group_version}\n'
               f'String without digits - {"".join(letters)}')
 
     else:
