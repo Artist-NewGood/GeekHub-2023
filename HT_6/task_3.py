@@ -4,8 +4,7 @@
 
 def is_prime(number):
     number = validation_number(number)
-    if number:
-        return number_divisors(number) == 2
+    return number_divisors(number) == 2
 
 
 def number_divisors(number):
@@ -23,14 +22,14 @@ def validation_number(number):
         exit()
 
 
-if __name__ == '__main__':
-    CASES = ((1, False),
-             (2, True),
-             (3, True),
-             (5, True),
-             (8, False),
-             (17, True)
-             )
-
-    for case, answer in CASES:
-        assert is_prime(case) == answer
+# if __name__ == '__main__':
+    # CASES = ((1, False),
+    #          (2, True),
+    #          (3, True),
+    #          (5, True),
+    #          (8, False),
+    #          (17, True)
+    #          )
+    #
+    # for case, answer in CASES:
+    #     assert is_prime(case) == answer

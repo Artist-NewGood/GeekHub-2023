@@ -9,8 +9,7 @@
 
 def displacement_of_elements(data, shift):
     shift = validation_shift(shift)
-    if shift:
-        shift = shift % len(data)
+    shift %= len(data)
 
     if not validation_data(data):
         return f'Data type must be a list'

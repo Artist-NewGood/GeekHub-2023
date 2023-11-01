@@ -5,11 +5,11 @@ from math import sqrt
 
 
 def square(side):
-    if validation_data_type(side):
-        perimeter = side + side + side + side
-        area = round(side * side, 2)
-        diagonal = round(side * sqrt(2), 2)
-        return perimeter, area, diagonal
+    side = validation_data_type(side)
+    perimeter = side * 4
+    area = round(side ** 2, 2)
+    diagonal = round(side * sqrt(2), 2)
+    return perimeter, area, diagonal
 
 
 def validation_data_type(number):

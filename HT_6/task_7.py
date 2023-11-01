@@ -18,7 +18,7 @@ def validation_data(sequence_elements):
     try:
         if not isinstance(sequence_elements, list):
             raise TypeError
-        return isinstance(sequence_elements, list)
+        return True
     except TypeError:
         print('Error, the required data type is a list')
         exit()
