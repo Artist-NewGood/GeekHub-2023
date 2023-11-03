@@ -37,36 +37,36 @@ class NoUpperLettersInPassword(Exception):
     pass
 
 
-def username_validation(username: str) -> str:
+def username_validation(username: str):
     """Checking the username for compliance with the requirements"""
     try:
         if not 3 <= len(username) <= 50:
-            raise IncorrectLengthUsername
+            raise IncorrectLengthUsername('Your username is not the right length (need length between 3 and 50)')
         if ' ' in username:
-            raise SpaceInUsername
+            raise SpaceInUsername('No spaces are allowed in the username')
         return 'OK'
-    except IncorrectLengthUsername:
-        return 'Your username is not the right length (need length between 3 and 50)'
-    except SpaceInUsername:
-        return 'No spaces are allowed in the username'
+    except IncorrectLengthUsername as err:
+        return err
+    except SpaceInUsername as err:
+        return err
 
 
-def password_validation(password: str) -> str:
+def password_validation(password: str):
     """Checking the password for compliance with the requirements"""
     try:
         if len(password) < 8:
-            raise IncorrectLengthUserPassword
+            raise IncorrectLengthUserPassword('Your password is too short (must be more than 8 characters)')
         if password.isalpha():
-            raise NoDigitInPassword
+            raise NoDigitInPassword('Your password must contain at least one digit')
         if password == password.lower():
-            raise NoUpperLettersInPassword
+            raise NoUpperLettersInPassword('Your password must contain at least one capital letter')
         return 'OK'
-    except IncorrectLengthUserPassword:
-        return 'Your password is too short (must be more than 8 characters)'
-    except NoDigitInPassword:
-        return 'Your password must contain at least one digit'
-    except NoUpperLettersInPassword:
-        return 'Your password must contain at least one capital letter'
+    except IncorrectLengthUserPassword as err:
+        return err
+    except NoDigitInPassword as err:
+        return err
+    except NoUpperLettersInPassword as err:
+        return err
 
 
 def main(username: str, password: str) -> tuple[str, str]:
