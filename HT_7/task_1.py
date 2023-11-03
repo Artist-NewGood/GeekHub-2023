@@ -24,11 +24,11 @@ def check_username_and_login(username: str, password: str, silent: bool = False)
         if (username, password) in user_data:
             return True
         else:
-            raise LoginException
-    except LoginException:
-        if silent:
-            return False
-        return 'Login error'
+            if silent:
+                return False
+            raise LoginException('Login error')
+    except LoginException as err:
+        print(err)
 
 
 if __name__ == '__main__':
