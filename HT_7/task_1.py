@@ -20,15 +20,13 @@ def check_username_and_login(username: str, password: str, silent: bool = False)
     user_data = [('Joey', 'polkfrt2#'), ('Brittney', 'qwerty'),
                  ('Alex', 'trAmp'), ('Izabel', 'vbfgjsnwj#22'),
                  ('WhoIAm', 'ukr2023')]
-    try:
-        if (username, password) in user_data:
-            return True
-        else:
-            if silent:
-                return False
-            raise LoginException('Login error')
-    except LoginException as err:
-        print(err)
+
+    if (username, password) in user_data:
+        return True
+    else:
+        if silent:
+            return False
+        raise LoginException('Login error')
 
 
 if __name__ == '__main__':
