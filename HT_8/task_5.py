@@ -14,7 +14,7 @@
 
 def count_unique_characters(text: str) -> int:
     """Finds the number of separate case-insensitive letters and digits, that occur more than 1 time in a string"""
-    letter = set(char for char in text if text.count(char) > 1)
+    letter = tuple(char for char in set(text) if text.count(char) > 1)
 
     return len(letter)
 
