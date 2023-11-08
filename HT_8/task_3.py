@@ -15,24 +15,17 @@
    Подивіться як веде себе стандартний range в таких випадках."""
 
 
-def my_range(*args):
+def my_range(start, end=None, step=1):
     """Return an object that produces a sequence of integers from start (inclusive) to stop (exclusive) by step"""
-    if not len(args):
-        raise TypeError('range expected at least 1 argument, got 0')
 
-    if not any(isinstance(number, int) for number in args):
-        raise TypeError(f'{str(type(*args))[7:-1]} object cannot be interpreted as an integer')
+    if not isinstance(start, int) or not isinstance(end, (int, type(None))) or not isinstance(step, int):
+        raise TypeError(f'{type(start).__name__} object cannot be interpreted as an integer')
 
-    if len(args) > 3:
-        raise TypeError(f'range expected at most 3 arguments, got {len(args)}')
-
-    if len(args) == 1:
-        start, end, step = 0, args[0], 1
-    elif len(args) == 2:
-        start, end, step = args[0], args[1], 1
-    else:
-        start, end, step = args
+    if end is None:
+        start, end = 0, start
 
     while (start < end and step > 0) or (start > end and step < 0):
         yield start
         start += step
+
+
