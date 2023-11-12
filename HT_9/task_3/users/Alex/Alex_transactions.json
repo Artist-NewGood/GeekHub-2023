@@ -1,0 +1,32 @@
+[
+   {
+      "Operation": "Registration",
+      "Amount": 0,
+      "Date": "2023-11-12 00:27:41"
+   },
+   {
+      "Operation": "Deposit",
+      "Amount": 10000.0,
+      "Date": "2023-11-12 00:28:32"
+   },
+   {
+      "Operation": "Deposit",
+      "Amount": 25.0,
+      "Date": "2023-11-12 17:24:00"
+   },
+   {
+      "Operation": "Withdrawal",
+      "Amount": 50.0,
+      "Date": "2023-11-12 17:24:17"
+   },
+   {
+      "Operation": "Deposit",
+      "Amount": 155.0,
+      "Date": "2023-11-12 17:27:22"
+   },
+   {
+      "Operation": "Withdrawal",
+      "Amount": 267.0,
+      "Date": "2023-11-12 17:27:49"
+   }
+]

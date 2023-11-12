@@ -1,0 +1,17 @@
+[
+   {
+      "Operation": "Registration",
+      "Amount": 0,
+      "Date": "2023-11-12 20:22:41"
+   },
+   {
+      "Operation": "Deposit",
+      "Amount": 500.0,
+      "Date": "2023-11-12 20:25:00"
+   },
+   {
+      "Operation": "Withdrawal",
+      "Amount": 499.99,
+      "Date": "2023-11-12 20:25:19"
+   }
+]
