@@ -35,10 +35,7 @@ from datetime import datetime
 import json
 from prettytable import PrettyTable
 import re
-from colorama import Fore, Back, Style, init
 
-# Ініціалізація модуля colorama
-init()
 
 class IncorrectLengthUsername(Exception):
     pass
