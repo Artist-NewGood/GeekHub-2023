@@ -26,7 +26,8 @@ def traffic_light() -> None:
     Printing the current colors for both cars and pedestrians."""
 
     for color_car, color_man in color():
-        for _ in range(3):
+        repeat_count = 2 if color_car == 'yellow' else 5
+        for _ in range(repeat_count):
             print(f'{color_car} {color_man}')
             sleep(1)
 
