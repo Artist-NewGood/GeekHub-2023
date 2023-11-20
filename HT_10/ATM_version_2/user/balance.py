@@ -73,7 +73,10 @@ def withdrawal(username: str) -> None:
             sleep(1)
             print('❎ Cancel operation')
             sub_menu(username)
-
+        if money_withdrawal < 0:
+            sleep(1)
+            print(' ! Error, the amount cannot be negative.\n')
+            continue
         if money_withdrawal % minimum_multiplicity_of_withdrawal:
             sleep(1)
             print('! Error, amount does not meet the minimum multiplicity, try again\n')
@@ -96,8 +99,8 @@ def withdrawal(username: str) -> None:
 
         break
 
-    if change_balance(username, -abs(money_withdrawal)):
-        add_transactions(username, -abs(money_withdrawal), amount_balance)
+    if change_balance(username, -money_withdrawal):
+        add_transactions(username, -money_withdrawal, amount_balance)
         sleep(1)
         # change_number_banknotes_when_user_withdraws(money_withdrawal)
         sub_menu(username)
@@ -121,6 +124,10 @@ def replenishment_money(username: str) -> None:
             sleep(1)
             print('❎ Cancel operation')
             sub_menu(username)
+        if money_replenishment < 0:
+            sleep(1)
+            print(' ! Error, the amount cannot be negative.\n')
+            continue
 
         if money_replenishment < minimum_multiplicity_of_replenishment:
             sleep(1)

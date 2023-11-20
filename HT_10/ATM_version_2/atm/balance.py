@@ -29,6 +29,8 @@ def balance_atm(operation=None) -> list | None:
         if operation == 'sum':
             return result_users_transactions
 
+        total_amount_money_in_atm = sum(number[0] * number[1] for number in result_users_transactions)
+
         table = PrettyTable()
         table.field_names = ['Banknote', 'Amount']
 
@@ -37,6 +39,7 @@ def balance_atm(operation=None) -> list | None:
 
         print('\n* ATM BALANCE SHEET *')
         print(table)
+        print(f'Total balance - {total_amount_money_in_atm}$')
 
 
 def change_balance_atm(username: str) -> None:
@@ -93,13 +96,18 @@ def change_balance_atm(username: str) -> None:
             print(f'Currently {number_of_banknotes_before_upd} banknotes of this denomination in the ATM')
 
             if choice == 1:
-                number_of_banknotes = check_input_user_data('Enter the number of banknotes you want to add '
-                                                            '(or press "Enter" to cancel): ')
-                if not number_of_banknotes:
-                    sleep(1)
-                    print('❎ Cancel operation')
-                    sub_menu(username)
-
+                while True:
+                    number_of_banknotes = check_input_user_data('Enter the number of banknotes you want to add '
+                                                                '(or press "Enter" to cancel): ')
+                    if not number_of_banknotes:
+                        sleep(1)
+                        print('❎ Cancel operation')
+                        sub_menu(username)
+                    if number_of_banknotes < 0:
+                        sleep(1)
+                        print(' ! Error, the number cannot be negative.\n')
+                        continue
+                    break
                 update_number_of_banknotes = number_of_banknotes_before_upd + number_of_banknotes
 
                 cursor.execute("""UPDATE atm_balance
@@ -115,16 +123,20 @@ def change_balance_atm(username: str) -> None:
                           'because it is not available in the ATM')
                     sleep(1)
                     sub_menu(username)
-
-                number_of_banknotes = check_incasator_number_banknotes_pick_up('Enter the number of banknotes '
-                                                                               'you want to pick up '
-                                                                               '(or press "Enter" to cancel): ',
-                                                                               number_of_banknotes_before_upd)
-                if not number_of_banknotes:
-                    sleep(1)
-                    print('❎ Cancel operation')
-                    sub_menu(username)
-
+                while True:
+                    number_of_banknotes = check_incasator_number_banknotes_pick_up('Enter the number of banknotes '
+                                                                                   'you want to pick up '
+                                                                                   '(or press "Enter" to cancel): ',
+                                                                                   number_of_banknotes_before_upd)
+                    if not number_of_banknotes:
+                        sleep(1)
+                        print('❎ Cancel operation')
+                        sub_menu(username)
+                    if number_of_banknotes < 0:
+                        sleep(1)
+                        print(' ! Error, the number cannot be negative.\n')
+                        continue
+                    break
                 update_number_of_banknotes = number_of_banknotes_before_upd - number_of_banknotes
                 cursor.execute("""UPDATE atm_balance
                                   SET number_of_banknotes = ?
