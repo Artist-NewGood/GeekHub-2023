@@ -17,6 +17,10 @@
 
 
 class Calc:
+    """
+       Calculator class
+       4 methods to calculate 2 values
+    """
     def __init__(self):
         self.last_result = None
         self.result = None
