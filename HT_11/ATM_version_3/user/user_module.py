@@ -195,8 +195,7 @@ class User:
         username = User.validation_username(input('Create your username: '))
         password = User.validation_password(input('Create your password: '))
 
-        chance = random.choice([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
-        if chance == 1:
+        if random.random() <= 0.1:
             User.welcome_bonus(username, password)
             return True
 
