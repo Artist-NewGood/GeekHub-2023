@@ -42,7 +42,10 @@ class Calc:
         return self.last_result
         
     def div(self, number_1, number_2):
-        self.result = number_1 / number_2
+         try:
+            self.result = number_1 / number_2
+        except ZeroDivisionError as err:
+            self.result = err
         self.operation()
         return self.last_result
     
