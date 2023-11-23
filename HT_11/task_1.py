@@ -29,25 +29,25 @@ class Calc:
     def add(self, number_1, number_2):
         self.result = number_1 + number_2
         self.operation()
-        return self.last_result
+        return self.result
         
     def multi(self, number_1, number_2):
         self.result = number_1 * number_2
         self.operation()
-        return self.last_result
+        return self.result
         
     def sub(self, number_1, number_2):
         self.result = number_1 - number_2
         self.operation()
-        return self.last_result
+        return self.result
         
     def div(self, number_1, number_2):
-         try:
+        try:
             self.result = number_1 / number_2
         except ZeroDivisionError as err:
             self.result = err
         self.operation()
-        return self.last_result
+        return self.result
     
     def operation(self):
         self.last_result = self.current_result
