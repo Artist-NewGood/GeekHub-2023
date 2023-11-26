@@ -1,7 +1,7 @@
 import sqlite3
 from time import sleep
 from HT_10.ATM_version_2.user.utils import check_file, check_input_user_data
-# from HT_10.ATM_version_2.atm.atm import change_number_banknotes_when_user_withdraws
+# from HT_10.ATM_version_3.atm.atm import change_number_banknotes_when_user_withdraws
 from HT_10.ATM_version_2.atm.balance import balance_atm
 from HT_10.ATM_version_2.user.transactions import add_transactions
 from HT_10.ATM_version_2.main import sub_menu

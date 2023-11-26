@@ -121,10 +121,10 @@ def sub_menu(username) -> None:
 def verification_animation() -> None:
     """Displays an animation of waiting for data verification"""
 
-    print('Check', end='')
+    print('Check', end='', flush=True)
     for _ in range(3):
         sleep(1)
-        print('.', end='')
+        print('.', end='', flush=True)
     return
 
 

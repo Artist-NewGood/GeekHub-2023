@@ -28,5 +28,15 @@
       "Operation": "Withdrawal",
       "Amount": 267.0,
       "Date": "2023-11-12 17:27:49"
+   },
+   {
+      "Operation": "Deposit",
+      "Amount": 25.5,
+      "Date": "2023-11-12 23:18:06"
+   },
+   {
+      "Operation": "Withdrawal",
+      "Amount": 25.0,
+      "Date": "2023-11-13 20:01:03"
    }
 ]

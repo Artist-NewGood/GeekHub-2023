@@ -89,6 +89,7 @@ def sub_menu(username: str) -> None:
 def start() -> None:
     """Main controller"""
 
+    from HT_11.ATM_version_3.system.system_module import check_login_data
     from HT_11.ATM_version_3.user.user_module import User
 
     print('▼\n'
@@ -117,7 +118,7 @@ def start() -> None:
                 for i in range(3, 0, -1):
                     sleep(1)
                     print(f'\n • Authorization •')
-                    result_check_users_name = User.check_login_data()
+                    result_check_users_name = check_login_data()
 
                     if result_check_users_name:
                         user_menu(result_check_users_name)
