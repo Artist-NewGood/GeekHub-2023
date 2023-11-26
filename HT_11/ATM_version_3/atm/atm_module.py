@@ -6,18 +6,24 @@ from datetime import datetime
 
 
 class Atm:
-    @staticmethod
-    def balance_atm(operation=None) -> list | None:
+    def __init__(self, username, operation, banknote, before_update, after_update):
+        self.username = username
+        # self.operation = operation
+        # self.banknote = banknote
+        # self.before_update = before_update
+        # self.after_update = after_update
+
+    def balance_atm(self=None) -> list | None:
         """Allows you to get the ATM balance in the form of a table
         with the values of the banknote name and their quantity"""
 
-        from HT_11.ATM_version_3.user.user_module import User
+        from HT_11.ATM_version_3.system.system_module import check_file
 
-        full_path = User.check_file()
+        full_path = check_file()
         with sqlite3.connect(full_path) as db:
             cursor = db.cursor()
 
-            if operation in ('replenishment', 'withdrawal'):
+            if self in ('replenishment', 'withdrawal'):
                 cursor.execute("""SELECT banknote
                                   FROM atm_balance
                                   WHERE number_of_banknotes != '0'
@@ -29,7 +35,7 @@ class Atm:
                               FROM atm_balance""")
             result_users_transactions = cursor.fetchall()
 
-            if operation == 'sum':
+            if self == 'sum':
                 return result_users_transactions
 
             total_amount_money_in_atm = sum(number[0] * number[1] for number in result_users_transactions)
@@ -44,15 +50,17 @@ class Atm:
             print(table)
             print(f'Total balance - {total_amount_money_in_atm}$')
 
-    @staticmethod
-    def change_balance_atm(username: str) -> None:
+    # @staticmethod
+    def change_balance_atm(self: str) -> None:
         """Allows you to change the ATM balance by selecting the desired banknote.
         Allows you to add banknotes and withdraw them."""
 
         from HT_11.ATM_version_3.incasator.incasator_module import Incasator
-        from HT_11.ATM_version_3.user.user_module import User
+        from HT_11.ATM_version_3.system.system_module import (check_file, check_input_user_data,
+                                                              check_input_incasator_denomination_banknote,
+                                                              check_incasator_number_banknotes_pick_up)
 
-        full_path = User.check_file()
+        full_path = check_file()
         with sqlite3.connect(full_path) as db:
             cursor = db.cursor()
 
@@ -65,26 +73,26 @@ class Atm:
                   '▼')
 
             while True:
-                choice = int(User.check_input_user_data('Your choice: '))
+                choice = int(check_input_user_data('Your choice: '))
                 if choice not in (1, 2, 0):
                     sleep(1)
                     print(' ! Error, need number (1, 2 or 0). Try again.\n')
                     continue
                 if not choice:
                     sleep(1)
-                    Incasator.incasator_menu(username)
+                    Incasator.incasator_menu(self)
 
                 sleep(1)
                 print('!Attention!\n'
                       'Banknote denominations that can be used to add: 𝟏𝟎, 𝟐𝟎, 𝟓𝟎, 𝟐𝟎𝟎, 2𝟎𝟎, 𝟓𝟎𝟎, 𝟏𝟎𝟎𝟎')
 
-                banknote = Incasator.check_input_incasator_denomination_banknote('Enter the denomination of the '
-                                                                                 'banknote you want to change '
-                                                                                 '(or press "Enter" to cancel): ')
+                banknote = check_input_incasator_denomination_banknote('Enter the denomination of the '
+                                                                       'banknote you want to change '
+                                                                       '(or press "Enter" to cancel): ')
                 if not banknote:
                     sleep(1)
                     print('❎ Cancel operation')
-                    sub_menu(username)
+                    sub_menu(self)
 
                 cursor.execute("""SELECT number_of_banknotes
                                   FROM atm_balance
@@ -98,13 +106,13 @@ class Atm:
 
                 if choice == 1:
                     while True:
-                        number_of_banknotes = User.check_input_user_data(
+                        number_of_banknotes = check_input_user_data(
                             'Enter the number of banknotes you want to add '
                             '(or press "Enter" to cancel): ')
                         if not number_of_banknotes:
                             sleep(1)
                             print('❎ Cancel operation')
-                            sub_menu(username)
+                            sub_menu(self)
                         if number_of_banknotes < 0:
                             sleep(1)
                             print(' ! Error, the number cannot be negative.\n')
@@ -124,15 +132,15 @@ class Atm:
                         print('It is impossible to perform a transaction for this banknote '
                               'because it is not available in the ATM')
                         sleep(1)
-                        sub_menu(username)
+                        sub_menu(self)
                     while True:
-                        number_of_banknotes = Incasator.check_incasator_number_banknotes_pick_up(
+                        number_of_banknotes = check_incasator_number_banknotes_pick_up(
                             'Enter the number of banknotes you want to pickup (or press "Enter" to cancel): ',
                             number_of_banknotes_before_upd)
                         if not number_of_banknotes:
                             sleep(1)
                             print('❎ Cancel operation')
-                            sub_menu(username)
+                            sub_menu(self)
                         if number_of_banknotes < 0:
                             sleep(1)
                             print(' ! Error, the number cannot be negative.\n')
@@ -147,7 +155,7 @@ class Atm:
                     break
 
                 elif choice == 0:
-                    Incasator.incasator_menu(username)
+                    Incasator.incasator_menu(self)
 
             update_sum_of_banknotes = update_number_of_banknotes * banknote
             cursor.execute("""UPDATE atm_balance
@@ -158,23 +166,23 @@ class Atm:
             db.commit()
             sleep(1)
             print('✅ Complete operation')
-            Atm.add_atm_balance_transactions(username, banknote, number_of_banknotes_before_upd,
+            Atm.add_atm_balance_transactions(self, banknote, number_of_banknotes_before_upd,
                                              update_number_of_banknotes)
 
-    @staticmethod
-    def add_atm_balance_transactions(username: str, banknote: int, before_update: int, after_update: int) -> None:
+    # @staticmethod
+    def add_atm_balance_transactions(self: str, banknote: int, before_update: int, after_update: int) -> None:
         """Adds a transaction to the corresponding table to change the atm balance"""
 
-        from HT_11.ATM_version_3.user.user_module import User
+        from HT_11.ATM_version_3.system.system_module import check_file
 
-        full_path = User.check_file()
+        full_path = check_file()
         with sqlite3.connect(full_path) as db:
             cursor = db.cursor()
             cursor.execute("""INSERT INTO atm_balance_transactions
                               ('name', 'banknote', 'Operation', 'was_number_of_banknotes',
                               'became_number_of_banknotes', 'date')
                               VALUES (?, ?, ?, ?, ?, ?)""",
-                           (username, banknote,
+                           (self, banknote,
                             f'Add banknotes' if before_update < after_update else 'Pick up banknotes',
                             before_update, after_update, datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
             db.commit()
@@ -185,9 +193,9 @@ class Atm:
         """Displays the data in the form of a table showing all operations
            performed by the cash collector with the atm balance"""
 
-        from HT_11.ATM_version_3.user.user_module import User
+        from HT_11.ATM_version_3.system.system_module import check_file
 
-        full_path = User.check_file()
+        full_path = check_file()
         with sqlite3.connect(full_path) as db:
             cursor = db.cursor()
             cursor.execute("""SELECT name, banknote, Operation, was_number_of_banknotes, became_number_of_banknotes, date

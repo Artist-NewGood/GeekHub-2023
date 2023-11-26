@@ -29,18 +29,25 @@ class Calc:
     def add(self, number_1, number_2):
         self.result = number_1 + number_2
         self.operation()
+        return self.last_result
 
     def multi(self, number_1, number_2):
         self.result = number_1 * number_2
         self.operation()
+        return self.last_result
 
     def sub(self, number_1, number_2):
         self.result = number_1 - number_2
         self.operation()
+        return self.result
 
     def div(self, number_1, number_2):
-        self.result = number_1 / number_2
+        try:
+            self.result = number_1 / number_2
+        except ZeroDivisionError as err:
+            self.result = err
         self.operation()
+        return self.last_result
 
     def operation(self):
         self.last_result = self.current_result
@@ -54,8 +61,9 @@ if __name__ == '__main__':
     print(equation.last_result)
     equation.multi(2, 3)
     print(equation.last_result)
-    equation.multi(3, 3)
+    equation.multi(3, 4)
     print(equation.last_result)
-
-
-
+    equation.div(1, 0)
+    print(equation.last_result)
+    equation.sub(2, 1)
+    print(equation.last_result)
