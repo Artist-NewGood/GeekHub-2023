@@ -1,6 +1,6 @@
 import sqlite3
 from time import sleep
-from HT_12.ATM_version_4.system.system_module import check_file, check_input_user_data
+
 from HT_12.ATM_version_4.atm.atm_module import ATM
 from HT_12.ATM_version_4.system.system_module import add_transactions
 from HT_12.ATM_version_4.main import sub_menu
@@ -10,6 +10,8 @@ class User:
     @staticmethod
     def show_balance(username: str) -> int:
         """View the user's balance and overwrite the balance after the selected transaction"""
+
+        from HT_12.ATM_version_4.system.system_module import check_file
 
         full_path = check_file()
         with sqlite3.connect(full_path) as db:
@@ -25,6 +27,8 @@ class User:
     @staticmethod
     def change_balance(username: str, money_request=None, operation=None) -> None | bool:
         """Changes the user's balance file after each operation"""
+
+        from HT_12.ATM_version_4.system.system_module import check_file
 
         amount_balance = User.show_balance(username)
         full_path = check_file()
@@ -44,6 +48,8 @@ class User:
     @staticmethod
     def withdrawal(username: str) -> None:
         """Withdrawing money from the user's balance"""
+
+        from HT_12.ATM_version_4.system.system_module import check_input_user_data
 
         total_amount_money_in_atm = sum(number[0] * number[1] for number in ATM.balance_atm('sum'))
         if not total_amount_money_in_atm:

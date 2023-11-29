@@ -61,7 +61,7 @@ class ATM:
 
         banknote_and_number = {0: 0}
 
-        for i in range(1, len(banknotes)):
+        for i in range(1, len(banknotes)+1):
             value = banknotes[i-1]
             new_banknote_counts = {}
             for suma in banknote_and_number.keys():
