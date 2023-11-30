@@ -7,7 +7,7 @@ from prettytable import PrettyTable
 
 
 class System:
-    def __init__(self, username):
+    def __init__(self):
         pass
 
     @staticmethod
