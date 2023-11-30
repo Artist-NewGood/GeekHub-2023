@@ -114,6 +114,8 @@ class User:
     def replenishment_money(username: str) -> None:
         """Adding money to the user's balance"""
 
+        from HT_12.ATM_version_4.system.system_module import check_input_user_data
+
         amount_balance = User.show_balance(username)
 
         minimum_multiplicity_of_replenishment, *_ = min(ATM.balance_atm('replenishment'), key=lambda banknote: banknote[0])
