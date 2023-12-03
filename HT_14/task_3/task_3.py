@@ -66,7 +66,7 @@ class QuotesScraper:
     def write_to_csv(self, authors_info: list) -> None:
 
         with open(self.RESULT_CSV, 'w', newline='', encoding='utf-8') as csv_file:
-            csv_writer = csv.writer(csv_file, delimiter=';')
+            csv_writer = csv.writer(csv_file)
 
             csv_writer.writerow(['quote', 'author', 'author_born_place', 'author_born_date', 'tags', 'description'])
             csv_writer.writerows(authors_info)
