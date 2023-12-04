@@ -19,6 +19,7 @@ class QuotesScraper:
         """A general parser algorithm that collects all the necessary information about each author"""
 
         authors_info = []
+        author_info = {}
         while True:
 
             response = requests.get(self.page_url)
@@ -26,26 +27,33 @@ class QuotesScraper:
             soup = BeautifulSoup(response.text, 'lxml')
             quotes = soup.find_all(class_='quote')
 
-            info = [self.parse_single_quotes(quote) for quote in quotes]
+            info = [self.parse_single_quotes(quote, author_info) for quote in quotes]
 
             next_page = soup.find('li', class_='next')
             authors_info.extend(info)
 
             if next_page:
                 self.page_url = self.ORIGINAL_URL + next_page.find('a')['href']
+                print(f'\nPAGE {self.page_url[-3:].strip("/")}\n')
             else:
                 break
 
         self.write_to_csv(authors_info)
 
-    def parse_single_quotes(self, obj: BeautifulSoup) -> tuple[str, str, str, str, str, str]:
+    def parse_single_quotes(self, obj: BeautifulSoup, authors_info: dict) -> tuple[str, str, str, str, str, str]:
         """Parses information in the form of the author, his/her quote and tags"""
 
         quote = obj.select_one('.text').text
         author = obj.select_one('.author').text
+        print(f'Parse about "{author}"')
+
         tag = obj.select_one('.keywords').get('content')
 
-        born_date, born_place, description = self.parse_about_author((obj.select_one('a')['href']))
+        if author in authors_info:
+            born_date, born_place, description = authors_info[author]
+        else:
+            born_date, born_place, description = self.parse_about_author((obj.select_one('a')['href']))
+            authors_info[author] = born_date, born_place, description
 
         return quote, author, born_place, born_date, tag, description
 
@@ -59,7 +67,7 @@ class QuotesScraper:
 
         author_born_date = soup.select_one('.author-born-date').text
         author_born_location = soup.select_one('.author-born-location').text.replace('in ', '')
-        author_description = soup.select_one('.author-description').text.strip()
+        author_description = soup.select_one('.author-description').text.replace('\n', '').strip()
 
         return author_born_date, author_born_location, author_description
 
@@ -71,6 +79,7 @@ class QuotesScraper:
             csv_writer.writerow(['quote', 'author', 'author_born_place', 'author_born_date', 'tags', 'description'])
             csv_writer.writerows(authors_info)
 
+            print('\nEND')
 
 if __name__ == '__main__':
     data = QuotesScraper()

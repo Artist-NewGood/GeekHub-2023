@@ -99,7 +99,12 @@ class CurrencyRate:
             user_currency = self.check_user_currency('Enter your currency: ')
 
         date_start = datetime.strptime(self.check_user_date('Enter start date: '), '%d.%m.%Y').toordinal()
-        date_end = datetime.strptime(self.check_user_date('Enter end date: '), '%d.%m.%Y').toordinal()
+        while True:
+            date_end = datetime.strptime(self.check_user_date('Enter end date: '), '%d.%m.%Y').toordinal()
+            if date_end < date_start:
+                print('Error, end date smaller start date\n')
+                continue
+            break
 
         table = PrettyTable()
         table.field_names = ['Currency', 'Sale rate', 'Purchase rate']
@@ -142,7 +147,7 @@ class CurrencyRate:
                 print(' ! Error number, try again\n')
                 self.back_menu()
 
-    def choice_variant_currency(self) -> None:
+    def choice_variant_currency(self) -> bool:
         """Allows you to choose the option of information presentation"""
 
         print('\nMenu:\n'
