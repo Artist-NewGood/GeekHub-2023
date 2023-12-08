@@ -3,6 +3,7 @@
     парсите їх і зберігаєте в CSV файл ID, назву та короткий опис кожного екстеншена
     (пошукайте уважно де його можна взяти) """
 
+
 import scrapy
 from typing import Any
 from urllib.parse import urljoin
