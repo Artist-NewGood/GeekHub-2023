@@ -8,7 +8,11 @@ import random
 from time import sleep
 from urllib.parse import urljoin
 from bs4 import BeautifulSoup
+<<<<<<< HEAD
+from dataclasses import fields
+=======
 from dataclasses import fields, astuple
+>>>>>>> 7418385abad29a5e9aa0f5db0089d8fa42451653
 from dataclasses import dataclass
 
 
@@ -29,7 +33,11 @@ class DomainRow:
     enddate: str
 
 
+<<<<<<< HEAD
+class ExpiredDomainsParser:
+=======
 class Parse:
+>>>>>>> 7418385abad29a5e9aa0f5db0089d8fa42451653
     RESULT_CSV = 'domain.csv'
     DOMAIN_ROW = [field.name for field in fields(DomainRow)]
     MAIN_URL = 'https://www.expireddomains.net'
@@ -47,13 +55,21 @@ class Parse:
         "X-Amzn-Trace-Id": "Root=1-6571bae8-18ec31306354ea3c30934a5b"
     }
 
+<<<<<<< HEAD
+    def fetch_and_parse_domain_data(self) -> None:
+        """ Initiates the web crawling process to extract domain information from the specified URL"""
+=======
     def parser(self) -> None:
         """Main controller"""
+>>>>>>> 7418385abad29a5e9aa0f5db0089d8fa42451653
 
         info = []
         print('Parsing')
         while True:
+<<<<<<< HEAD
+=======
             sleep(random.choice(range(7, 20)))
+>>>>>>> 7418385abad29a5e9aa0f5db0089d8fa42451653
 
             response = requests.get(urljoin(self.MAIN_URL, self.PAGE_URL), headers=self.HEADERS)
             soup = BeautifulSoup(response.text, 'lxml')
@@ -61,20 +77,37 @@ class Parse:
             fields_info = soup.find('tbody')
             if not fields_info:
                 break
+<<<<<<< HEAD
+            domain_info = [self.parse_single_domain_data(info) for info in fields_info.find_all('tr')]
+
+            next_page = soup.find('a', class_='next')
+
+            info.extend(domain_info)
+            self.write_to_csv(info)
+            sleep(random.choice(range(7, 20)))
+=======
             domain_info = [self.parse_single_domain(info) for info in fields_info.find_all('tr')]
 
             next_page = soup.find('a', class_='next')
             info.extend(domain_info)
+>>>>>>> 7418385abad29a5e9aa0f5db0089d8fa42451653
 
             if next_page:
                 self.PAGE_URL = next_page['href']
                 print('Steel parsing...')
             else:
                 break
+<<<<<<< HEAD
+        print('\nEND')
+
+    @staticmethod
+    def parse_single_domain_data(odj: BeautifulSoup) -> tuple:
+=======
         self.write_to_csv(info)
 
     @staticmethod
     def parse_single_domain(odj: BeautifulSoup) -> tuple:
+>>>>>>> 7418385abad29a5e9aa0f5db0089d8fa42451653
         """Parse text from every data of domain"""
 
         domain = odj.select_one('.field_domain').text
@@ -103,9 +136,16 @@ class Parse:
             csv_writer.writerow(self.DOMAIN_ROW)
             csv_writer.writerows(domain_info)
 
+<<<<<<< HEAD
+
+if __name__ == '__main__':
+    p = ExpiredDomainsParser()
+    p.fetch_and_parse_domain_data()
+=======
             print('\nEND')
 
 
 if __name__ == '__main__':
     p = Parse()
     p.parser()
+>>>>>>> 7418385abad29a5e9aa0f5db0089d8fa42451653

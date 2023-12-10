@@ -12,7 +12,11 @@ from random import choice
 from time import sleep
 
 
+<<<<<<< HEAD
+class SearsProductParser:
+=======
 class Parse:
+>>>>>>> 7418385abad29a5e9aa0f5db0089d8fa42451653
 
     ORIGINAL_URL = 'https://www.sears.com'
 
@@ -31,7 +35,11 @@ class Parse:
     CSV_FIELDS = ['Brand_name', 'Product_name', 'Discounted_price',
                   'Price_before_discount', '~Savings percent', 'Savings money', 'Product link']
 
+<<<<<<< HEAD
+    def fetch_and_parse_product_data(self) -> None:
+=======
     def parsing(self) -> None:
+>>>>>>> 7418385abad29a5e9aa0f5db0089d8fa42451653
         """Makes a request to the API and receives a JSON file with product data for a given category id"""
 
         print('Start:', datetime.now())
@@ -74,10 +82,17 @@ class Parse:
                 start_index += 48
                 end_index += 48
                 sleep(choice(range(7, 15)))
+<<<<<<< HEAD
+                self.write_to_csv(products_info)
+            except KeyError:
+                break
+        print('End:', datetime.now())
+=======
             except KeyError:
                 break
 
         self.write_to_csv(products_info)
+>>>>>>> 7418385abad29a5e9aa0f5db0089d8fa42451653
 
     @staticmethod
     def calculate_savings(price: str, reg_price: str) -> tuple[str, str]:
@@ -102,9 +117,16 @@ class Parse:
             csv_writer.writerow(self.CSV_FIELDS)
             csv_writer.writerows(authors_info)
 
+<<<<<<< HEAD
+
+if __name__ == '__main__':
+    p = SearsProductParser()
+    p.fetch_and_parse_product_data()
+=======
             print('End:', datetime.now())
 
 
 if __name__ == '__main__':
     p = Parse()
     p.parsing()
+>>>>>>> 7418385abad29a5e9aa0f5db0089d8fa42451653
