@@ -12,7 +12,7 @@ from random import choice
 from time import sleep
 
 
-class Parse:
+class SearsProductParser:
 
     ORIGINAL_URL = 'https://www.sears.com'
 
@@ -31,7 +31,7 @@ class Parse:
     CSV_FIELDS = ['Brand_name', 'Product_name', 'Discounted_price',
                   'Price_before_discount', '~Savings percent', 'Savings money', 'Product link']
 
-    def parsing(self) -> None:
+    def fetch_and_parse_product_data(self) -> None:
         """Makes a request to the API and receives a JSON file with product data for a given category id"""
 
         print('Start:', datetime.now())
@@ -74,10 +74,10 @@ class Parse:
                 start_index += 48
                 end_index += 48
                 sleep(choice(range(7, 15)))
+                self.write_to_csv(products_info)
             except KeyError:
                 break
-
-        self.write_to_csv(products_info)
+        print('End:', datetime.now())
 
     @staticmethod
     def calculate_savings(price: str, reg_price: str) -> tuple[str, str]:
@@ -102,9 +102,7 @@ class Parse:
             csv_writer.writerow(self.CSV_FIELDS)
             csv_writer.writerows(authors_info)
 
-            print('End:', datetime.now())
-
 
 if __name__ == '__main__':
-    p = Parse()
-    p.parsing()
+    p = SearsProductParser()
+    p.fetch_and_parse_product_data()
