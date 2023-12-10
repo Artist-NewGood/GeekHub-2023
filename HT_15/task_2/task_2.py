@@ -48,7 +48,10 @@ class ExpiredDomainsParser:
     }
 
     def fetch_and_parse_domain_data(self) -> None:
-        """ Initiates the web crawling process to extract domain information from the specified URL"""
+        """Function performs web scraping to extract information about domains from the provided URL.
+           It iterates through paginated results, extracts domain information from each row. The resulting
+           information is passed to the method for writing to a file"""
+        
 
         info = []
         print('Parsing')
@@ -77,7 +80,7 @@ class ExpiredDomainsParser:
 
     @staticmethod
     def parse_single_domain_data(odj: BeautifulSoup) -> tuple:
-        """Parse text from every data of domain"""
+        """Parse text from every data row of domain"""
 
         domain = odj.select_one('.field_domain').text
         bl = odj.select_one('.field_bl').select_one('a')['title'][0]

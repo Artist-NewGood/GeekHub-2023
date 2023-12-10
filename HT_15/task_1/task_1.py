@@ -32,7 +32,10 @@ class SearsProductParser:
                   'Price_before_discount', '~Savings percent', 'Savings money', 'Product link']
 
     def fetch_and_parse_product_data(self) -> None:
-        """Makes a request to the API and receives a JSON file with product data for a given category id"""
+        """Makes requests to the API to retrieve product data for a specified category ID. This function iterates
+           through paginated results, extracts information such as brand, name, price, discount and link for each
+           product, and appends the data to the 'products_info' list. The resulting information is passed to the
+           method for writing to a file"""
 
         print('Start:', datetime.now())
 
