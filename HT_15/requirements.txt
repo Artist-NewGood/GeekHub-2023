@@ -1,0 +1,4 @@
+bs4==0.0.1
+requests==2.25.1
+Scrapy==2.11.0
+urllib3==1.26.5
