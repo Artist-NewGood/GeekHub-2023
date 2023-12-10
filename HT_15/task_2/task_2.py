@@ -8,7 +8,7 @@ import random
 from time import sleep
 from urllib.parse import urljoin
 from bs4 import BeautifulSoup
-from dataclasses import fields, astuple
+from dataclasses import fields
 from dataclasses import dataclass
 
 
@@ -29,7 +29,7 @@ class DomainRow:
     enddate: str
 
 
-class Parse:
+class ExpiredDomainsParser:
     RESULT_CSV = 'domain.csv'
     DOMAIN_ROW = [field.name for field in fields(DomainRow)]
     MAIN_URL = 'https://www.expireddomains.net'
@@ -47,13 +47,12 @@ class Parse:
         "X-Amzn-Trace-Id": "Root=1-6571bae8-18ec31306354ea3c30934a5b"
     }
 
-    def parser(self) -> None:
-        """Main controller"""
+    def fetch_and_parse_domain_data(self) -> None:
+        """ Initiates the web crawling process to extract domain information from the specified URL"""
 
         info = []
         print('Parsing')
         while True:
-            sleep(random.choice(range(7, 20)))
 
             response = requests.get(urljoin(self.MAIN_URL, self.PAGE_URL), headers=self.HEADERS)
             soup = BeautifulSoup(response.text, 'lxml')
@@ -61,20 +60,23 @@ class Parse:
             fields_info = soup.find('tbody')
             if not fields_info:
                 break
-            domain_info = [self.parse_single_domain(info) for info in fields_info.find_all('tr')]
+            domain_info = [self.parse_single_domain_data(info) for info in fields_info.find_all('tr')]
 
             next_page = soup.find('a', class_='next')
+
             info.extend(domain_info)
+            self.write_to_csv(info)
+            sleep(random.choice(range(7, 20)))
 
             if next_page:
                 self.PAGE_URL = next_page['href']
                 print('Steel parsing...')
             else:
                 break
-        self.write_to_csv(info)
+        print('\nEND')
 
     @staticmethod
-    def parse_single_domain(odj: BeautifulSoup) -> tuple:
+    def parse_single_domain_data(odj: BeautifulSoup) -> tuple:
         """Parse text from every data of domain"""
 
         domain = odj.select_one('.field_domain').text
@@ -103,9 +105,7 @@ class Parse:
             csv_writer.writerow(self.DOMAIN_ROW)
             csv_writer.writerows(domain_info)
 
-            print('\nEND')
-
 
 if __name__ == '__main__':
-    p = Parse()
-    p.parser()
+    p = ExpiredDomainsParser()
+    p.fetch_and_parse_domain_data()
