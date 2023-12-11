@@ -6,10 +6,10 @@
     Наприклад, категорія https://www.sears.com/tools-tool-storage/b-1025184 має ІД 1025184"""
 
 import csv
-import requests
 from datetime import datetime
 from random import choice
 from time import sleep
+import requests
 
 
 class SearsProductParser:

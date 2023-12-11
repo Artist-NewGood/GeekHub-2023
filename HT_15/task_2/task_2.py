@@ -2,14 +2,15 @@
     (з ним будьте обережні), вибираєте будь-яку на ваш вибір доменну зону і парсите список  доменів - їх там буде
     десятки тисяч (звичайно ураховуючи пагінацію). Всі отримані значення зберігти в CSV файл. """
 
-import requests
+
 import csv
 import random
 from time import sleep
 from urllib.parse import urljoin
-from bs4 import BeautifulSoup
 from dataclasses import fields
 from dataclasses import dataclass
+from bs4 import BeautifulSoup
+import requests
 
 
 @dataclass
@@ -51,7 +52,7 @@ class ExpiredDomainsParser:
         """Function performs web scraping to extract information about domains from the provided URL.
            It iterates through paginated results, extracts domain information from each row. The resulting
            information is passed to the method for writing to a file"""
-        
+
 
         info = []
         print('Parsing')

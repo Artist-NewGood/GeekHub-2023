@@ -4,9 +4,9 @@
     (пошукайте уважно де його можна взяти) """
 
 
-import scrapy
 from typing import Any
 from urllib.parse import urljoin
+import scrapy
 from scrapy import Request
 from scrapy.http import Response
 from task_3.items import Task3Item

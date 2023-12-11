@@ -1,7 +1,5 @@
-from types import NoneType
-
-from bs4 import BeautifulSoup
 import re
+from bs4 import BeautifulSoup
 from task_3.parsers.chrome_webstore.dataclasses import SitemapItem
 from task_3.parsers.chrome_webstore.dataclasses import LocationItem
 from task_3.parsers.chrome_webstore.dataclasses import LocationItemInfo
