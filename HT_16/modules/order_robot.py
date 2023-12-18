@@ -46,7 +46,7 @@ class OrderRobotSpareBinIndustries:
 
         return driver
 
-    def wait_and_click_element(self, by: Any, selector: str, timeout=WAIT_TIME) -> WebElement:
+    def wait_element_clickable(self, by: Any, selector: str, timeout=WAIT_TIME) -> WebElement:
         """Expects the element to be clickable."""
 
         try:
@@ -86,41 +86,41 @@ class OrderRobotSpareBinIndustries:
     def close_popup(self) -> None:
         """Closing the pop-up window."""
 
-        self.wait_and_click_element(By.CSS_SELECTOR, "div button.btn.btn-dark").click()
+        self.wait_element_clickable(By.CSS_SELECTOR, "div button.btn.btn-dark").click()
 
     def choose_head(self, head_option: int) -> None:
         """Selection of the robot head."""
 
         head_selector = (By.XPATH, '//select[@class="custom-select"]')
-        Select(self.wait_and_click_element(*head_selector)).select_by_index(head_option)
+        Select(self.wait_element_clickable(*head_selector)).select_by_index(head_option)
 
     def choose_body(self, body_option: int) -> None:
         """Selection of the robot body."""
 
-        self.wait_and_click_element(By.ID, f'id-body-{body_option}').click()
+        self.wait_element_clickable(By.ID, f'id-body-{body_option}').click()
 
     def input_legs(self, legs_number: int) -> None:
         """Input the number of legs of the robot."""
 
         css_selector = "div input[placeholder='Enter the part number for the legs']"
-        self.wait_and_click_element(By.CSS_SELECTOR, css_selector).send_keys(legs_number)
+        self.wait_element_clickable(By.CSS_SELECTOR, css_selector).send_keys(legs_number)
 
     def input_address(self, shipping_address: str) -> None:
         """Entering a shipping address."""
 
-        self.wait_and_click_element(By.ID, 'address').send_keys(shipping_address)
+        self.wait_element_clickable(By.ID, 'address').send_keys(shipping_address)
 
     def click_preview_button(self) -> None:
         """Pressing the order preview button."""
 
-        self.wait_and_click_element(By.ID, 'preview').click()
+        self.wait_element_clickable(By.ID, 'preview').click()
 
     def click_order_button(self) -> None:
         """Pressing the order confirmation button (until the order is confirmed)."""
 
         while True:
             try:
-                self.wait_and_click_element(By.CSS_SELECTOR, "button[class='btn btn-primary']").click()
+                self.wait_element_clickable(By.CSS_SELECTOR, "button[class='btn btn-primary']").click()
                 self.driver.find_element(By.ID, 'order-completion')
                 break
             except NoSuchElementException:
@@ -131,16 +131,16 @@ class OrderRobotSpareBinIndustries:
 
         number_order = self.take_number_receipt()
 
-        self.wait_and_click_element(By.ID, 'robot-preview-image').screenshot(
+        self.wait_element_clickable(By.ID, 'robot-preview-image').screenshot(
             f'{self.OUTPUT_PATH}/{number_order}_robot.png')
 
     def take_number_receipt(self) -> str:
         """Retrieving the order number from the receipt."""
 
-        number_order = self.wait_and_click_element(By.CSS_SELECTOR, 'p[class="badge badge-success"]').text
+        number_order = self.wait_element_clickable(By.CSS_SELECTOR, 'p[class="badge badge-success"]').text
         return number_order
 
     def click_another_order_button(self) -> None:
         """Pressing the button for a new order."""
 
-        self.wait_and_click_element(By.ID, 'order-another').click()
+        self.wait_element_clickable(By.ID, 'order-another').click()

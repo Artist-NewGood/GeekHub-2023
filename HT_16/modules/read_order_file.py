@@ -12,13 +12,11 @@ class OrderRead:
     def read_order_file(self) -> list[list[str]]:
         """Read data from the order file."""
 
-        response = requests.get(self.__link)
         try:
-            if response.status_code >= 400:
-                raise HTTPError(f'Error. The server is unavailable. \nStatus code: {response.status_code} '
-                                f'\nFor more information about status code use google.')
-        except HTTPError as e:
-            print(e)
+            response = requests.get(self.__link)
+            response.raise_for_status()
+        except HTTPError as err:
+            print(err)
             exit()
 
         csv_data = list(csv.reader(StringIO(response.text)))[1:]
