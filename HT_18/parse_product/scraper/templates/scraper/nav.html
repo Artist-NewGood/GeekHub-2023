@@ -1,0 +1,51 @@
+<style>
+  nav {
+    margin-top: 100px;
+    margin-left: 400px;
+  }
+
+  .button {
+    background-color: rgb(203, 243, 228);
+    width: 125px;
+    border-radius: 6px;
+    border: 1px;
+    color: white;
+    padding: 5px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+    margin-top: -10px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+  }
+
+
+
+  .button:hover {
+    background-color: rgba(4, 170, 109, 0.65);
+    color: white;
+  }
+
+  body,
+  html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+
+  #login {
+    margin-top: 120px;
+  }
+
+  .nav-link {
+    text-decoration: none;
+  }
+</style>
+<nav>
+  <button class="button"> <a class="nav-link" href="{% url 'scraper:index' %}">Головна</a></button><br>
+  <button class="button"> <a class="nav-link" href="{% url 'scraper:add_product' %}">Додати товар</a></button><br>
+  <button class="button"> <a class="nav-link" href="{% url 'scraper:show_all_products' %}">Всі товари</a></button><br>
+  <button class="button" id="login"> <a class="nav-link" href="{% url 'scraper:login' %}">Логін</a></button><br>
+  <button class="button" id="cart"> <a class="nav-link" href="{% url 'scraper:cart' %}">Корзина</a></button>
+</nav>

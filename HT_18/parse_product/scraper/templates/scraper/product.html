@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>{{ title }}</title>
+</head>
+<style>
+  #customers {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 60%;
+    margin-left: 650px;
+    margin-top: -325px;
+  }
+
+  #customers td,
+  #customers th {
+    border: 3px solid rgba(252, 252, 252, 0.32);
+    padding: 8px;
+  }
+
+  #customers tr:nth-child(even) {
+    background-color: rgba(7, 59, 169, 0.06);
+  }
+
+  #customers tr:hover {
+    background-color: rgba(241, 221, 0, 0.07);
+  }
+
+  #customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #eeeeee;
+    color: white;
+  }
+
+  .info {
+    margin-left: -20px;
+    margin-top: 10px;
+  }
+
+  .back {
+
+    margin-left: 632px;
+    margin-top: 10px;
+  }
+
+  .back-link {
+    text-decoration: none;
+  }
+</style>
+
+<body>
+  {% include 'header.html' %}
+  {% include 'nav.html' %}
+
+  <div class="info">
+    <table id="customers">
+
+      <tr>
+
+        <td>Product ID:</td>
+        <td> {{ product.product_id }}</td>
+      </tr>
+      <tr>
+        <td>Brand:</td>
+        <td>{{ product.brand_name }}</td>
+      </tr>
+      <tr>
+        <td>Product name:</td>
+        <td> {{ product.product_name }}</td>
+      </tr>
+      <tr>
+        <td>Category:</td>
+        <td> {{ product.category }}</td>
+      </tr>
+      <tr>
+        <td>Current price:</td>
+        <td>{{ product.discounted_price }} </td>
+      </tr>
+      <tr>
+        <td< /td>
+          <td>Old price:</td>
+          <td>{{ product.price_before_discount }} </td>
+      </tr>
+      <tr>
+        <td>Savings:</td>
+        <td> {{ product.savings_percent }} </td>
+      </tr>
+      <tr>
+        <td>Product URL:</td>
+        <td> <a class="site-link" href="{{ product.product_link }}" target="_blank">{{ product.product_link }}</a></td>
+      </tr>
+
+      </tr><br>
+    </table>
+  </div>
+  <div class="back">
+    <button><a class="back-link" href="{% url 'scraper:show_all_products' %}">Назад</button></a>
+  </div>
+  <br>
+  <br>
+
+
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<style>
+.add-product {
+    margin-left: 650px;
+    margin-top: -325px;
+}
+
+</style>
+<body>
+    {% include 'header.html' %}
+    {% include 'nav.html' %}
+    <div class="add-product">
+    <form action="{% url 'scraper:scraper_data' %}">
+        <label>
+            <h1>Сторінка пошуку продукту</h1>
+            <textarea name="id_string" rows="10" cols="60"
+                placeholder="Enter ID separated by comma, new line, semicolon or a space">
+</textarea>
+        </label>
+        <br>
+        <br>
+        <input type="submit" value="Запустити пошук">
+    </form>
+    </div>
+</body>
+
+</html>
