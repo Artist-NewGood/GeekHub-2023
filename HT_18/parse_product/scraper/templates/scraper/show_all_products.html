@@ -58,7 +58,7 @@
     <div class="info">
       {% for product in products %}
       <a class="product" href="{% url 'scraper:product_data' pk=product.pk %}" target="_parent">
-        {{ product.product_name }}</a><br>
+       <b> {{ product.id }}.</b> {{ product.product_name }} - <b>{{ product.discounted_price }}</b></a><br>
       {% endfor %}
     </div>
 
