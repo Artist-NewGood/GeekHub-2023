@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <style>
+        #customers {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 60%;
+            margin-left: 650px;
+            margin-top: -325px;
+        }
+
+        #customers td,
+        #customers th {
+            padding: 8px;
+        }
+
+        #customers th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #eeeeee;
+            color: white;
+        }
+
+        .info {
+            margin-left: -20px;
+            margin-top: 10px;
+        }
+
+        .name {
+            background-color: rgba(0, 63, 213, 0.06);
+            border-radius: 30px;
+        }
+
+        .login {
+            margin-left: 650px;
+            margin-top: -320px;
+        }
+
+    </style>
+</head>
+<style>
+    .total {
+        margin-left: 500px;
+        margin-top: 100px;  /* Зміни це значення відповідно до ваших потреб */
+    }
+
+</style>
+
+<body>
+    {% include 'header.html' %}
+    {% include 'nav.html' %}
+    <div class="info">
+        <table id="customers">
+            {% for item in cart_items %}
+                <tr class="name">
+                    <td> <b>Товар  </b></td>
+                </tr>
+                <tr>
+                    <td>Назва продукту</td>
+                    <td>{{ item.product.product_name }}</td>
+                </tr>
+                <tr>
+                    <td>Ціна</td>
+                    <td>{{ item.product.discounted_price }}</td>
+                </tr>
+                <tr>
+    <td>Кількість замовленного товару</td>
+    <td>
+        <form action="{% url 'scraper:change_basket_quantity' item.product.id %}" method="post">
+            {% csrf_token %}
+            <input name="quantity" type="number" class="form-control" value="{{ item.quantity }}" min="1">
+            <input type="submit" value="Змінити значення">
+        </form>
+    </td>
+</tr>
+
+                <tr>
+                    <td>Загальна ціна</td>
+                    <td>{{ item.sum }}$</td>
+                </tr>
+                <tr>
+                    <td> <a href="{% url 'scraper:basket_remove' item.id %}">Видалити товар</a><p></p>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% if cart_items %}
+            <tr>
+                <td></td>
+                <td class="total"><h2><b>Total</b> {{ cart_items.total_sum }}$</h2></td>
+                 <td class="total"> <a href="{% url 'scraper:basket_clear' %}">Очистити корзину</a>
+                    </td>
+
+            </tr>
+            {% else %}
+            <tr>
+                <td></td>
+                <td class="total"><b><h2>Корзина порожня</b></h2></td>
+            </tr>
+        {% endif %}
+        </table>
+    </div>
+</body>
+
+</html>
