@@ -38,8 +38,8 @@ class SearsProductParser:
             brand_name=response['brandName'],
             product_name=response['name'],
             category=response['category'],
-            discounted_price=response['price']['finalPriceDisplay'],
-            price_before_discount=response['price']['regularPriceDisplay'],
+            discounted_price=response['price']['finalPriceDisplay'].replace(',', ''),
+            price_before_discount=response['price']['regularPriceDisplay'].replace(',', ''),
             savings_percent=response['price'].get('savingsDisplay', 'No savings'),
             product_link=urljoin(self.ORIGINAL_URL, response['additionalAttributes']['seoUrl'])
         )
