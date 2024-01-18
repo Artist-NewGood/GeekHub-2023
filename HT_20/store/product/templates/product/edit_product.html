@@ -9,8 +9,11 @@
 <div class="container">
     <div class="blue-container">
       <h3>Редагування інформації про товар<hr></h3>
-        <button class="btn btn-secondary"  disabled>Редагувати</button>
-        <button class="btn btn-danger" disabled>Видалити</button>
+            <form action="{% url 'product:scraper_product' %}" >
+                <input type="hidden" value="{{ product_detail.product_id }}" name="id_string">
+                <input type="submit" value="Оновити інформацію з магазину" class="btn btn-primarys">
+            </form>
+
         <form method="post" action="{% url 'product:save_edit_product' product_detail.id %}">
           {% csrf_token %}
       <table class="customers">

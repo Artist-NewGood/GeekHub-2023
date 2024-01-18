@@ -4,7 +4,6 @@ from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.shortcuts import redirect
 
-
 from .models import Product, Category
 from .models import IdString
 from .forms import EditProductForm
@@ -47,10 +46,11 @@ def show_all_products(request, category_name=None, page_number=1):
 
 
 def scraper_product(request):
+
     response = request.GET.get('id_string')
     IdString.objects.create(input_string=response)
     Popen(['python3', 'product/services/subscraper.py'])
-    return redirect('product:add_product')
+    return redirect('product:show_all_products')
 
 
 def product_detail(request, product_id):

@@ -12,7 +12,8 @@
         {% if user.is_superuser %}
         <a href="{% url 'product:edit_product' product_detail.id %}"><button class="btn btn-secondary">Редагувати</button></a>
         <a href="{% url 'product:del_products' product_detail.id %}"><button class="btn btn-danger">Видалити</button></a>
-        {% endif %}
+
+    {% endif %}
       <table class="customers">
         <tr>
           <td class="column-1">Product ID:</td>

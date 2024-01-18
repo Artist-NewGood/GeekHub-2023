@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 
 from product.models import Product
-from basket.models import Basket
+from .models import Basket
 
 
 def show_basket(request):
