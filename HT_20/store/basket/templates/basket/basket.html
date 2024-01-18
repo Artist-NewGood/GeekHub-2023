@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+
+<body>
+    {% include 'product/base.html' %}
+
+    <div class="container">
+        <div class="blue-container">
+            {% if user.is_authenticated %}
+            <table id="customers">
+                {% for item in items %}
+                <tr>
+                    <td class="column-1"><mark style="background-color: rgba(228,245,2,0.95); border-radius: 6px">
+                            Доданий товар до корзини ▼</mark>
+                        <p></p>
+                    </td>
+                </tr>
+                <tr>
+                    <p></p>
+                    <td class="column-1">Назва продукту:</td>
+                    <td class="column-2"><a href="{% url 'product:product_detail' item.product.id %}">{{ item.product.product_name }}</a></td>
+                </tr>
+                <tr>
+                    <td class="column-1">Ціна:</td>
+                    <td class="column-2">{{ item.product.discounted_price }}</td>
+                </tr>
+                <tr>
+                    <td class="column-4">Кількість замовленного товару:</td>
+                    <td class="column-2">
+                        <form action="{% url 'basket:change_basket_quantity' item.product.id%}" method="post">
+                            {% csrf_token %}
+                            <input name="quantity" type="number" class="quantity-control" value="{{ item.quantity }}"
+                                min="1">
+                            <input type="submit" value="Змінити значення" class="form-control-basket">
+                        </form>
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <td>Загальна ціна</td>
+                    <td>${{ item.sum }}</td>
+                </tr>
+                <tr>
+                    <td> <a href="{% url 'basket:basket_remove' item.id %}" class="del-basket-item">Видалити товар</a>
+                        <p></p>
+                    </td>
+                </tr>
+                {% endfor %}
+
+            </table>
+            {% if items %}
+
+            <h2 class="total">Загальна ціна: ${{ items.total_sum }}</h2>
+            <a href="{% url 'basket:basket_clear' %}" class="clear-basket">Очистити корзину</a>
+
+            {% else %}
+            <h1 class="empty-basket"><b><br>Корзина порожня :(</b><br><br><br><br><br><br><br><br><br></h1>
+            {% endif %}
+                
+            {% else %}
+
+            <h1 class="welcome"><b><br><br><br><br><br>Доступно після авторизації
+                    <br><br><br><br><br><br><br><br><br></h1>
+            {% endif %}
+
+
+
+
+        </div>
+    </div>
+
+</body>
+
+</html>
