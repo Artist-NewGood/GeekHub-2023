@@ -46,7 +46,6 @@ def show_all_products(request, category_name=None, page_number=1):
 
 
 def scraper_product(request):
-
     response = request.GET.get('id_string')
     IdString.objects.create(input_string=response)
     Popen(['python3', 'product/services/subscraper.py'])

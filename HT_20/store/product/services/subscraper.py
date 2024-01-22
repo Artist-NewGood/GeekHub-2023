@@ -1,4 +1,12 @@
+if __name__ == "__main__":
+    import sys
+    from pathlib import Path
+
+    current_dir = Path(__file__).resolve().parent.parent.parent
+    sys.path.append(str(current_dir))
+
 import django
+
 django.setup()
 
 from product.models import Product
