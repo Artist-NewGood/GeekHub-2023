@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+{% include 'product/base.html' %}
+<div class="container">
+    <div class="blue-container">
+      <h3>Редагування інформації про товар<hr></h3>
+            <form action="{% url 'product:scraper_product' %}" >
+                <input type="hidden" value="{{ product_detail.product_id }}" name="id_string">
+                <input type="submit" value="Оновити інформацію з магазину" class="btn btn-primarys">
+            </form>
+
+        <form method="post" action="{% url 'product:save_edit_product' product_detail.id %}">
+          {% csrf_token %}
+      <table class="customers">
+        <tr>
+          <td class="column-1">Product ID:</td>
+          <td> <input id="textinput" value="{{ product_detail.product_id }}" name="product_id" type="text" class="input-xlarge"></td>
+        </tr>
+          <tr>
+          <td class="column-1">Product name:</td>
+           <td> <input id="textinput" value="{{ product_detail.product_name }}" name="product_name" type="text"  class="input-xlarge"></td>
+        </tr>
+          <tr>
+          <td class="column-1">Brand:</td>
+              <td> <input id="textinput" value="{{ product_detail.brand_name }}" name="brand_name" type="text"  class="input-xlarge"></td>
+        </tr>
+          <tr>
+          <td class="column-1">Category:</td>
+             <td>
+        <select id="category" name="category" class="input-xlarge">
+            {% for category in categories %}
+            <option value="{{ category.id }}" {% if product_detail.category.id == category.id %}selected{% endif %}>{{ category.name }}</option>
+            {% endfor %}
+        </select>
+    </td>
+        </tr>
+          <tr>
+          <td class="column-1">Current price:</td>
+              <td> <input id="textinput" value="{{ product_detail.discounted_price }}" name="discounted_price" type="text"  class="input-xlarge"></td>
+        </tr>
+          <tr>
+          <td class="column-1">Old price:</td>
+              <td> <input id="textinput" value="{{ product_detail.price_before_discount }}" name="price_before_discount" type="text"  class="input-xlarge"></td>
+        </tr>
+          <tr>
+          <td class="column-1">Savings:</td>
+              <td> <input id="textinput" value="{{ product_detail.savings_percent }}" name="savings_percent" type="text"  class="input-xlarge"></td>
+        </tr>
+          <tr>
+          <td class="column-1">Product URL:</td>
+              <td> <input id="textinput" value="{{ product_detail.product_link }}" name="product_link" type="text"  class="input-xlarge"></td>
+        </tr>
+        
+      </table>
+            <button type="submit" class="btn btn-success">Зберегти зміни</button>
+         </form>
+
+        <a href="{% url 'product:product_detail' product_detail.id %}">
+            <button class="btn btn-dark">Відміна</button>
+        </a>
+        
+
+    </div>
+  </div>
+</body>
+</html>

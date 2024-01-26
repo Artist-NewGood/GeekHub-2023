@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+{% include 'product/base.html' %}
+<div class="container">
+    <div class="blue-container">
+        <h3>Детальна інформація про товар<hr></h3>
+        {% if user.is_superuser %}
+        <a href="{% url 'product:edit_product' product_detail.id %}"><button class="btn btn-secondary">Редагувати</button></a>
+        <a href="{% url 'product:del_products' product_detail.id %}"><button class="btn btn-danger">Видалити</button></a>
+
+    {% endif %}
+      <table class="customers">
+        <tr>
+          <td class="column-1">Product ID:</td>
+          <td class="column-2">{{ product_detail.product_id }}</td>
+        </tr>
+          <tr>
+          <td class="column-1">Product name:</td>
+          <td class="column-2">{{ product_detail.product_name }}</td>
+        </tr>
+          <tr>
+          <td class="column-1">Brand:</td>
+          <td class="column-2">{{ product_detail.brand_name }}</td>
+        </tr>
+          <tr>
+          <td class="column-1">Category:</td>
+          <td class="column-2">{{ product_detail.category }}</td>
+        </tr>
+          <tr>
+          <td class="column-1">Current price: (~average)</td>
+          <td class="column-2">{{ product_detail.discounted_price  }}</td>
+        </tr>
+          <tr>
+          <td class="column-1">Old price:</td>
+          <td class="column-2">{{ product_detail.price_before_discount }}</td>
+        </tr>
+          <tr>
+          <td class="column-1">Savings:</td>
+          <td class="column-2">{{ product_detail.savings_percent }}</td>
+        </tr>
+          <tr>
+          <td class="column-1">Product URL:</td>
+              <td class="column-2"> <a href="{{ product_detail.product_link }}" target="_blank">{{ product_detail.product_link }}</a></td>
+        </tr>
+        
+      </table>
+        {% if user.is_authenticated %} 
+         <form action="{% url 'basket:add_basket' product_detail.id %}" method="post">
+             
+        {% csrf_token %}
+        <input type="number" name="quantity" min="1" required value="1" class="quantity-basket">
+        <input type="submit" class="btn btn-warning" value="Додати до корзини">
+             
+    </form> 
+            <a href="{% url 'product:show_all_products' %}"><button class="btn btn-info">Назад</button></a>
+    {% else %}
+        <a href="{% url 'product:show_all_products' %}"><button class="btn btn-back">Назад</button></a>
+        {% endif %}
+
+    </div>
+  </div>
+</body>
+</html>
