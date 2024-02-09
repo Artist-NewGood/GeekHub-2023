@@ -1,0 +1,126 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+
+</head>
+<body>
+{% include 'base.html' %}
+
+<div class="container">
+    <div class="blue-container">
+    {% if user.is_authenticated %}
+         <table id="customers">
+            {% for item in items %}
+                <tr><td class="column-1"><mark style="background-color: rgba(228,245,2,0.95); border-radius: 6px">
+                    Доданий товар до корзини ▼</mark><p></p></td></tr>
+         <tr> <p></p>      
+          <td class="column-1">Назва продукту:</td>
+             <td class="column-2"><a href="{% url 'product:product_detail' item.product.id %}">{{ item.product.product_name }}</a></td>
+        </tr>
+        <tr>       
+          <td class="column-1">Ціна:</td>
+          <td class="column-2">{{ item.product.discounted_price }}</td>
+        </tr>        
+        <tr>       
+          <td class="column-4">Кількість замовленного товару:</td>
+          <td class="column-2">
+             <form id="ChangeBasketForm" data-url="{% url 'basket:change_basket_quantity' item.product.id %}" method="post" >
+                {% csrf_token %}
+                <input name="quantity" type="number" class="quantity-control" value="{{ item.quantity }}" min="1">
+                <button type="button" class="form-control-basket change-quantity-btn">Змінити значення</button>
+            </form>
+          </td>
+   
+        </tr>
+
+                <tr>
+                    <td>Загальна ціна</td>
+                    <td>${{ item.sum }}</td>
+                </tr>
+                <tr>
+                    <td> <button type="button" class="del-basket-item" data-item-id="{{ item.id }}"> Видалити товар</button>
+                        <p></p>
+                    </td>
+                </tr>
+            {% endfor %}
+ 
+
+        </table>
+        {% if items %}
+           
+                <h2 class="total">Загальна ціна: ${{ items.total_sum }}</h2>
+                 <button type="button" id="clearBasket"  class="clear-basket">Очистити корзину</button>
+            {% else %}
+              <h1 class="empty-basket"><b><br>Корзина порожня :(</b><br><br><br><br><br><br><br><br><br></h1>
+            {% endif %}
+         {% else  %}
+             <h1 class="welcome"><b><br><br><br><br><br>Доступно після авторизації
+            <br><br><br><br><br><br><br><br><br></h1> 
+         {% endif %}
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+    $(document).on('click', '#clearBasket', function () {
+        $.ajax({
+            url: "{% url 'basket:basket_clear' %}",
+            method: 'DELETE',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+            },
+            success: function () {
+                $('.blue-container').load(location.href + " .blue-container > *");
+            },
+            error: function (xhr) {
+                console.log(xhr);
+            }
+        });
+    });
+ });
+    $(document).on('click', '.del-basket-item', function () {
+            const itemId = $(this).data('item-id');
+            $.ajax({
+                url: "{% url 'basket:basket_remove' 0 %}".replace('0', itemId),
+                method: 'DELETE',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                },
+                success: function () {
+                    $('.blue-container').load(location.href + " .blue-container > *");
+                },
+                error: function (xhr) {
+                    console.log(xhr);
+                }
+            });
+        });
+    $(document).on('click', '.change-quantity-btn', function () {
+            const form = $(this).closest('form')
+            const quantity = form.find('.quantity-control').val();
+
+            $.ajax({
+                url: form.data('url'),
+                method: 'POST',
+                data: {
+                    'quantity': quantity
+                },
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                },
+                success: function (response) {
+                    $('.blue-container').load(location.href + " .blue-container > *");
+                },
+                error: function (xhr) {
+                    console.log(xhr);
+                }
+            });
+        });
+ 
+</script>
+</body>
+</html>
