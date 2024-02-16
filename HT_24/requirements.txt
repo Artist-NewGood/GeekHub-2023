@@ -1,0 +1,7 @@
+django==5.0
+requests==2.31.0
+djangorestframework==3.14.0
+celery==5.3.6
+redis==5.0.1
+factory_boy==3.3.0
+Faker==23.2.0

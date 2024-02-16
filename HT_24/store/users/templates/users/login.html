@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+{% include 'base.html' %}
+<div class="container">
+        <div class="blue-container">
+            <h3>Авторизація</h3>
+            <form class="d-flex flex-column align-items-center" method="post">
+                {% csrf_token %}
+                {% if messages or form.non_field_errors %}
+                    <div class="alert">
+                        {{ form.non_field_errors }}
+
+                    </div>
+                {% endif %}
+                <div class="mb-3">
+
+                    <p></p><label for="loginInput" class="form-label">Логін</label>
+                    <input type="text" class="form-control" id="loginInput" placeholder="Введіть логін" name="username">
+                </div>
+                <div class="mb-3">
+                    <label for="passwordInput" class="form-label">Пароль</label>
+                    <input type="password" class="form-control" id="passwordInput" placeholder="Введіть пароль" name="password">
+                </div>
+                <button type="submit" class="btn btn-primary">Увійти</button><br>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
